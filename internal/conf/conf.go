@@ -17,7 +17,6 @@ var (
 	ID      = App.Flag("id", "Unique application ID").Default(xid.New().String()).String()
 	Name    = App.Flag("name", "Application name").Default(NG.Generate()).String()
 	VBanner = App.Flag("banner", "Display [ tsak2 ] banner .").Default("false").Bool()
-
 	Version = App.Command("version", "Display information about [ tsak2 ]")
 	VTable  = Version.Flag("table", "Display [ tsak2 ] inner information .").Default("true").Bool()
 

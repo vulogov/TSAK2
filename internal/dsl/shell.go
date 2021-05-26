@@ -1,5 +1,3 @@
 package dsl
 
-var (
-	Completer = []string{}
-)
+var ()
