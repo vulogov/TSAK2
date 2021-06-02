@@ -3,7 +3,7 @@ package tsak
 import (
 	"fmt"
 
-	"github.com/apex/log"
+	"github.com/pieterclaerhout/go-log"
 
 	"github.com/vulogov/TSAK2/internal/banner"
 	"github.com/vulogov/TSAK2/internal/conf"

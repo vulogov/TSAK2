@@ -5,6 +5,7 @@
 *.so
 *.dylib
 bin/*
+bin/darwin/*
 coverage/*
 
 # Test binary, built with `go test -c`

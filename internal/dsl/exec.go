@@ -33,7 +33,8 @@ func InitDSL() (cfg *zygo.ZlispConfig) {
 }
 
 func MakeEnvironment(cfg *zygo.ZlispConfig) (env *zygo.Zlisp) {
-	env = zygo.NewZlisp()
+	AllEnvInitBeforeCreationOfEnv()
+	env = zygo.NewZlispWithFuncs(TsakBuiltinFunctions())
 	if cfg.CpuProfile != "" {
 		f, err := os.Create(cfg.CpuProfile)
 		if err != nil {

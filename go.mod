@@ -4,7 +4,6 @@ go 1.16
 
 require (
 	github.com/Jeffail/gabs/v2 v2.6.1
-	github.com/apex/log v1.9.0
 	github.com/common-nighthawk/go-figure v0.0.0-20200609044655-c4b36f998cf2
 	github.com/fatih/color v1.10.0 // indirect
 	github.com/glycerine/blake2b v0.0.0-20151022103502-3c8c640cd7be // indirect
@@ -12,6 +11,7 @@ require (
 	github.com/glycerine/greenpack v5.1.1+incompatible // indirect
 	github.com/glycerine/liner v0.0.0-20160121172638-72909af234e0 // indirect
 	github.com/glycerine/zygomys v5.1.2+incompatible
+	github.com/goml/gobrain v0.0.0-20201212123421-2e2d98ca8249
 	github.com/goombaio/namegenerator v0.0.0-20181006234301-989e774b106e
 	github.com/gopherjs/gopherjs v0.0.0-20210519211817-2312de329ae4 // indirect
 	github.com/mattn/go-runewidth v0.0.10 // indirect
@@ -26,4 +26,5 @@ require (
 	github.com/ugorji/go v1.2.6 // indirect
 	golang.org/x/sys v0.0.0-20210510120138-977fb7262007 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
+	gopkg.in/yaml.v3 v3.0.0-20200605160147-a5ece683394c // indirect
 )
