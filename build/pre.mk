@@ -12,3 +12,4 @@ pre:
 	go get github.com/rs/xid
 	go get github.com/glycerine/zygomys/zygo
 	go get github.com/lrita/cmap
+	go get github.com/zealws/golang-ring

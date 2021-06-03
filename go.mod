@@ -25,6 +25,7 @@ require (
 	github.com/tinylib/msgp v1.1.5 // indirect
 	github.com/tomlazar/table v0.1.0
 	github.com/ugorji/go v1.2.6 // indirect
+	github.com/zealws/golang-ring v0.0.0-20210116075443-7c86fdb43134
 	golang.org/x/sys v0.0.0-20210510120138-977fb7262007 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	gopkg.in/yaml.v3 v3.0.0-20200605160147-a5ece683394c // indirect
