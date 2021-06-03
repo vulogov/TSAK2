@@ -14,6 +14,7 @@ require (
 	github.com/goml/gobrain v0.0.0-20201212123421-2e2d98ca8249
 	github.com/goombaio/namegenerator v0.0.0-20181006234301-989e774b106e
 	github.com/gopherjs/gopherjs v0.0.0-20210519211817-2312de329ae4 // indirect
+	github.com/lrita/cmap v0.0.0-20200818170753-e987cd3dfa73
 	github.com/mattn/go-runewidth v0.0.10 // indirect
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
 	github.com/peterh/liner v1.2.1

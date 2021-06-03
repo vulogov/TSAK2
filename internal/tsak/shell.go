@@ -30,6 +30,7 @@ func Shell() {
 	}
 	cfg := dsl.InitDSL()
 	env := dsl.MakeEnvironment(cfg)
+	log.Debugf("TSAK_script bootstrap file: %v", *conf.BootStrap)
 	log.Info("Entering REPL loop. Ctrl-D to exit")
 	for {
 		if value, err := line.Prompt(cfg.Prompt); err == nil {

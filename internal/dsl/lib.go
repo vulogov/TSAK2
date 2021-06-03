@@ -4,6 +4,8 @@ import (
 	"github.com/glycerine/zygomys/zygo"
 	. "github.com/glycerine/zygomys/zygo"
 	"github.com/pieterclaerhout/go-log"
+
+	"github.com/vulogov/TSAK2/internal/pipe"
 )
 
 func GetTheAnswer(env *Zlisp, name string, args []Sexp) (Sexp, error) {
@@ -18,6 +20,7 @@ func TsakBuiltinFunctions() map[string]zygo.ZlispUserFunction {
 		AllTsakCoreFunctions(),
 		LogFunctions(),
 		PerceptronModuleFunctions(),
+		pipe.PipeFunctions(),
 	)
 }
 

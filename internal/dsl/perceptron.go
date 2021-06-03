@@ -63,5 +63,4 @@ func PerceptronSetup() {
 	GoStructRegistry.RegisterUserdef(&RegisteredType{GenDefMap: true, Factory: func(env *Zlisp, h *SexpHash) (interface{}, error) {
 		return &Perceptron{}, nil
 	}}, true, "Perceptron")
-	fmt.Println(GoStructRegistry.Lookup("Perceptron"))
 }

@@ -5,9 +5,22 @@ import (
 	"github.com/pieterclaerhout/go-log"
 )
 
+func TsakPipeSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
+	dPkg := `(def pipe (package "pipe"
+     { Create := pipecreate;
+       Send := pipesend;
+       Len := pipelen;
+       Recv := piperecv;
+     }
+  ))`
+	_, err := env.EvalString(dPkg)
+	PanicOn(err)
+}
+
 func TsakStandardSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
 	log.Debug("DSL setup for TSAK is reached")
 	TsakLogSetup(cfg, env)
+	TsakPipeSetup(cfg, env)
 }
 
 func TsakCustomSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {

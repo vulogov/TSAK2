@@ -35,6 +35,11 @@ func Table() {
 				{"Version", conf.BVersion},
 				{"Application ID", *conf.ID},
 				{"Application name", *conf.Name},
+				{"SNMP community", *conf.SNMPCommunity},
+				{"SNMP v3 user", *conf.SNMPUser},
+				{"SNMP v3 passphrase", *conf.SNMPAuthPass},
+				{"SNMP v3 privacy", *conf.SNMPAuthPriv},
+				{"SNMP listen", *conf.SNMPListen},
 			},
 		}
 		tab.WriteTable(os.Stdout, &cfg)
