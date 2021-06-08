@@ -9,13 +9,13 @@ PROJECT_MODULE ?= $(shell $(GO) list -m)
 LDFLAGS    ?= "-s -w -X main.version=$(PROJECT_VER) -X main.appName=$$b -X $(PROJECT_MODULE)/internal/client.version=$(PROJECT_VER) "
 SRCDIR     ?= .
 COMPILE_OS ?= darwin linux windows
+COVERAGE_DIR ?= ./coverage
 
 # Determine commands by looking into cmd/*
 COMMANDS   ?= $(wildcard ${SRCDIR}/cmd/*)
 
 # Determine binary names by stripping out the dir names
 BINS       := $(foreach cmd,${COMMANDS},$(notdir ${cmd}))
-
 
 compile-clean:
 	@echo "=== $(PROJECT_NAME) === [ compile-clean    ]: removing binaries..."

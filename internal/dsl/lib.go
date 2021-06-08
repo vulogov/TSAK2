@@ -20,6 +20,7 @@ func TsakBuiltinFunctions() map[string]zygo.ZlispUserFunction {
 		AllTsakCoreFunctions(),
 		LogFunctions(),
 		PerceptronModuleFunctions(),
+		TelemetryObservationFunctions(),
 		pipe.PipeFunctions(),
 	)
 }
@@ -34,4 +35,5 @@ func AllTsakCoreFunctions() map[string]ZlispUserFunction {
 func AllEnvInitBeforeCreationOfEnv() {
 	log.Debug("DSL initialization before environment creation")
 	PerceptronSetup()
+	TelemetryObservationMatrixSetup()
 }

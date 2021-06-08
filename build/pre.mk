@@ -12,4 +12,6 @@ pre:
 	go get github.com/rs/xid
 	go get github.com/glycerine/zygomys/zygo
 	go get github.com/lrita/cmap
-	go get github.com/zealws/golang-ring
+	go get github.com/edwingeng/deque
+	go get github.com/gosnmp/gosnmp
+	go mod download github.com/stretchr/testify

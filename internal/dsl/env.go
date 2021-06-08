@@ -21,6 +21,8 @@ func TsakStandardSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
 	log.Debug("DSL setup for TSAK is reached")
 	TsakLogSetup(cfg, env)
 	TsakPipeSetup(cfg, env)
+	TelemetryObservationPackageSetup(cfg, env)
+	SnmpMetricPackageSetup(cfg, env)
 }
 
 func TsakCustomSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {

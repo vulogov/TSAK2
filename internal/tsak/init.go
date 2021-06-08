@@ -5,10 +5,12 @@ import (
 
 	tlog "github.com/vulogov/TSAK2/internal/log"
 	"github.com/vulogov/TSAK2/internal/signal"
+	"github.com/vulogov/TSAK2/internal/snmp"
 )
 
 func Init() {
 	tlog.Init()
 	log.Debug("[ tsak2 ] tsak.Init() is reached")
 	signal.InitSignal()
+	snmp.InitSNMPAgent()
 }
