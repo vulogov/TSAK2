@@ -1,6 +1,7 @@
 package banner
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/mgutz/ansi"
@@ -36,10 +37,8 @@ func Table() {
 				{"Application ID", *conf.ID},
 				{"Application name", *conf.Name},
 				{"SNMP community", *conf.SNMPCommunity},
-				{"SNMP v3 user", *conf.SNMPUser},
-				{"SNMP v3 passphrase", *conf.SNMPAuthPass},
-				{"SNMP v3 privacy", *conf.SNMPAuthPriv},
 				{"SNMP listen", *conf.SNMPListen},
+				{"SNMP port", fmt.Sprintf("%d", *conf.SNMPPort)},
 			},
 		}
 		tab.WriteTable(os.Stdout, &cfg)

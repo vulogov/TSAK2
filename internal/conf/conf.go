@@ -20,10 +20,8 @@ var (
 
 	// SNMP-related configuration
 	SNMPCommunity = App.Flag("community", "SNMP 2c community string").Default("public").String()
-	SNMPUser      = App.Flag("snmpuser", "SNMP 3 username").Default("v3user").String()
-	SNMPAuthPass  = App.Flag("snmpauth", "SNMP 3 authentication passphrase").Default("v3password").String()
-	SNMPAuthPriv  = App.Flag("snmppriv", "SNMP 3 privacy passphrase").Default("v3priv").String()
-	SNMPListen    = App.Flag("snmplisten", "Address for internal TSAK SNMP agent").Default("127.0.0.1:6161").String()
+	SNMPListen    = App.Flag("snmplisten", "IP Address for internal TSAK SNMP agent").Default("127.0.0.1").String()
+	SNMPPort      = App.Flag("snmpport", "Port for internal TSAK SNMP agent").Default("6161").Int()
 
 	// Bootstrap-related
 	BootStrap = App.Flag("boot", "TSAK script for the environment bootstrap").ExistingFile()

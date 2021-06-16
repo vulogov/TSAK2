@@ -4,7 +4,6 @@ go 1.16
 
 require (
 	github.com/Jeffail/gabs/v2 v2.6.1
-	github.com/PromonLogicalis/asn1 v0.0.0-20190312173541-d60463189a56
 	github.com/common-nighthawk/go-figure v0.0.0-20200609044655-c4b36f998cf2
 	github.com/edwingeng/deque v0.0.0-20210510083854-82d15ba89fe0
 	github.com/fatih/color v1.10.0 // indirect
@@ -21,14 +20,12 @@ require (
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
 	github.com/peterh/liner v1.2.1
 	github.com/pieterclaerhout/go-log v1.14.0
-	github.com/posteo/go-agentx v0.2.1 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/rs/xid v1.3.0
 	github.com/shurcooL/go-goon v0.0.0-20210110234559-7585751d9a17 // indirect
-	github.com/stretchr/testify v1.7.0 // indirect
 	github.com/tinylib/msgp v1.1.5 // indirect
 	github.com/tomlazar/table v0.1.0
-	github.com/twsnmp/gosnmp v1.28.4 // indirect
+	github.com/twsnmp/gosnmp v1.28.4
 	github.com/ugorji/go v1.2.6 // indirect
 	golang.org/x/sys v0.0.0-20210510120138-977fb7262007 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6

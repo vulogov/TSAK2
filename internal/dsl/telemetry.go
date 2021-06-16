@@ -237,8 +237,8 @@ func TOMGet(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 	switch e := v.(type) {
 	case int:
 	case int64:
-  case uint32:
-  case uint64:
+	case uint32:
+	case uint64:
 		return &SexpInt{Val: int64(e)}, nil
 	case float64:
 		return &SexpFloat{Val: float64(e)}, nil
