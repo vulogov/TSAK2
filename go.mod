@@ -17,6 +17,7 @@ require (
 	github.com/gopherjs/gopherjs v0.0.0-20210519211817-2312de329ae4 // indirect
 	github.com/lrita/cmap v0.0.0-20200818170753-e987cd3dfa73
 	github.com/mattn/go-runewidth v0.0.10 // indirect
+	github.com/mattn/go-sqlite3 v1.14.7
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
 	github.com/peterh/liner v1.2.1
 	github.com/pieterclaerhout/go-log v1.14.0

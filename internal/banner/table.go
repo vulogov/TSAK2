@@ -39,6 +39,7 @@ func Table() {
 				{"SNMP community", *conf.SNMPCommunity},
 				{"SNMP listen", *conf.SNMPListen},
 				{"SNMP port", fmt.Sprintf("%d", *conf.SNMPPort)},
+				{"Path to MIBS database", *conf.SNMPMibsdb},
 			},
 		}
 		tab.WriteTable(os.Stdout, &cfg)

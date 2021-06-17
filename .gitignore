@@ -7,6 +7,7 @@
 bin/*
 bin/darwin/*
 coverage/*
+mibs/nri-snmp.db
 
 # Test binary, built with `go test -c`
 *.test

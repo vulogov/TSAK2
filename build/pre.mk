@@ -15,3 +15,4 @@ pre:
 	go get github.com/edwingeng/deque
 	go get github.com/twsnmp/gosnmp
 	go mod download github.com/stretchr/testify
+	go get github.com/mattn/go-sqlite3

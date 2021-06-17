@@ -30,4 +30,5 @@ func TsakCustomSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
 	callFun := `(def call _method)`
 	_, err := env.EvalString(callFun)
 	PanicOn(err)
+	TsakGlobals(cfg, env)
 }

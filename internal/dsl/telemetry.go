@@ -14,6 +14,7 @@ import (
 type TelemetryObservationMatrix struct {
 	Matrix               cmap.Cmap
 	Defaults             cmap.Cmap
+	Size                 cmap.Cmap
 	ObservabilityHorizon int64 `json:"ObservabilityHorizon" msg:"ObservabilityHorizon"`
 }
 
@@ -35,6 +36,42 @@ func (tom *TelemetryObservationMatrix) _create(source, name string, defval inter
 	r := deque.NewDeque()
 	tom.Matrix.Store(key, r)
 	return true
+}
+
+func (tom *TelemetryObservationMatrix) SetSize(source, name string, size int) bool {
+	log.Debugf("Set size for TDATA for %s@%s %v", source, name, size)
+	key := makekey(source, name)
+	tom.Size.LoadOrStore(key, size)
+	return true
+}
+
+func (tom *TelemetryObservationMatrix) GetSize(source, name string) int {
+	key := makekey(source, name)
+	d, ok := tom.Size.Load(key)
+	if !ok {
+		return 0
+	}
+	return int(d.(int))
+}
+
+func (tom *TelemetryObservationMatrix) AdjustSize(source, name string, data interface{}) interface{} {
+	size := tom.GetSize(source, name)
+	if size == 0 {
+		return data
+	}
+	switch size {
+	case 32:
+		return int32(data.(int64))
+	case 33:
+		return uint32(data.(int64))
+	case 34:
+		return int(data.(int64))
+	case 64:
+		return int64(data.(int64))
+	case 65:
+		return uint64(data.(int64))
+	}
+	return data
 }
 
 func (tom *TelemetryObservationMatrix) CreateFloat(source, name string, defval float64) bool {
@@ -92,9 +129,9 @@ func (tom *TelemetryObservationMatrix) Get(source, name string) interface{} {
 		if !ok {
 			return nil
 		}
-		return d
+		return tom.AdjustSize(source, name, d)
 	}
-	return m.Dequeue()
+	return tom.AdjustSize(source, name, m.Dequeue())
 }
 
 func (tom *TelemetryObservationMatrix) Len(source, name string) int {
@@ -142,6 +179,15 @@ func (tom *TelemetryObservationMatrix) Sample(source, name string) (res []interf
 		res[c] = m.Peek(c)
 	}
 	return
+}
+
+func (tom *TelemetryObservationMatrix) Has(source, name string) bool {
+	key := makekey(source, name)
+	_, ok := tom.Defaults.Load(key)
+	if !ok {
+		return false
+	}
+	return true
 }
 
 func (tom *TelemetryObservationMatrix) _matrix(source, name []string, defval interface{}) int {
@@ -196,7 +242,7 @@ func TOMMake(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 }
 
 func TOMAdd(env *Zlisp, name string, args []Sexp) (Sexp, error) {
-	if len(args) != 3 {
+	if len(args) < 3 {
 		return SexpNull, WrongNargs
 	}
 	if !IsString(args[0]) {
@@ -218,6 +264,12 @@ func TOMAdd(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 	default:
 		n += TOM.AddString(AsString(args[0]), AsString(args[1]), AsString(args[2]))
 	}
+	if len(args) == 4 {
+		switch st := args[2].(type) {
+		case *SexpInt:
+			TOM.SetSize(AsString(args[0]), AsString(args[1]), int(st.Val))
+		}
+	}
 	return &SexpInt{Val: int64(n)}, nil
 }
 
@@ -236,8 +288,8 @@ func TOMGet(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 	v := TOM.Get(AsString(args[0]), AsString(args[1]))
 	switch e := v.(type) {
 	case int:
-	case int64:
 	case uint32:
+	case int64:
 	case uint64:
 		return &SexpInt{Val: int64(e)}, nil
 	case float64:
@@ -248,11 +300,29 @@ func TOMGet(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 	return SexpNull, fmt.Errorf("TOM returned unexpected telemetry type")
 }
 
+func TOMHas(env *Zlisp, name string, args []Sexp) (Sexp, error) {
+
+	if len(args) != 2 {
+		return SexpNull, WrongNargs
+	}
+	if !IsString(args[0]) {
+		return SexpNull, fmt.Errorf("First argument must be string")
+	}
+	if !IsString(args[1]) {
+		return SexpNull, fmt.Errorf("Second argument must be string")
+	}
+
+	v := TOM.Has(AsString(args[0]), AsString(args[1]))
+
+	return &SexpBool{Val: v}, nil
+}
+
 func TelemetryObservationFunctions() map[string]ZlispUserFunction {
 	return map[string]ZlispUserFunction{
 		"tommake": TOMMake,
 		"tomadd":  TOMAdd,
 		"tomget":  TOMGet,
+		"tomhas":  TOMHas,
 	}
 }
 
@@ -261,6 +331,7 @@ func TelemetryObservationPackageSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
      { Make := tommake;
        Add := tomadd;
        Get := tomget;
+			 Has := tomhas;
      }
   ))`
 	_, err := env.EvalString(myPkg)
