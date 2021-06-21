@@ -1,0 +1,3 @@
+(for [(def i1 0) (< i1 1) (def i1 (+ 1 i1))]
+  (printf "Hello World 1 #%d\n" i1)
+)

@@ -224,8 +224,11 @@ func (mibs *MIBS) Export() int {
 					log.Debugf("Exporting %s as Gauge", k)
 				} else if tsv == "Gauge32" {
 					TOM.AddInt("snmp", k, 0)
+					TOM.SetSize("snmp", k, 33)
 					snmp.AgentSnmp.AddMibList(k, gosnmp.Gauge32, tomSnmpGet)
 					log.Debugf("Exporting %s as Gauge32", k)
+				} else if tsv == "TimeTicks" {
+					log.Debugf("TimeTicks type for %s not yet supported", k)
 				} else {
 					TOM.AddInt("snmp", k, 0)
 					TOM.SetSize("snmp", k, 34)

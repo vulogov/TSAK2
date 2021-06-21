@@ -39,4 +39,5 @@ func AllEnvInitBeforeCreationOfEnv() {
 	PerceptronSetup()
 	TelemetryObservationMatrixSetup()
 	MIBSDatatypeSetup()
+	GeneratorSetup()
 }

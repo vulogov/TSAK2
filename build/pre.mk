@@ -16,3 +16,4 @@ pre:
 	go get github.com/twsnmp/gosnmp
 	go mod download github.com/stretchr/testify
 	go get github.com/mattn/go-sqlite3
+	go get github.com/nikhilsaraf/go-tools/multithreading

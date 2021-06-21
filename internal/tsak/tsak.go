@@ -14,6 +14,8 @@ func Main() {
 		Version()
 	case conf.Shell.FullCommand():
 		Shell()
+	case conf.Run.FullCommand():
+		Run()
 	}
 	Fin()
 }

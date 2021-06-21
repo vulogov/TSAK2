@@ -1,12 +1,40 @@
 package conf
 
 import (
+	"fmt"
+	"os"
 	"time"
 
 	"github.com/goombaio/namegenerator"
 	"github.com/rs/xid"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
+
+type filelist []string
+
+func (i *filelist) Set(value string) error {
+	_, err := os.Stat(value)
+	if os.IsNotExist(err) {
+		return fmt.Errorf("Script file '%s' not found", value)
+	} else {
+		*i = append(*i, value)
+		return nil
+	}
+}
+
+func (i *filelist) String() string {
+	return ""
+}
+
+func (i *filelist) IsCumulative() bool {
+	return true
+}
+
+func FileList(s kingpin.Settings) (target *[]string) {
+	target = new([]string)
+	s.SetValue((*filelist)(target))
+	return
+}
 
 var (
 	seed    = time.Now().UTC().UnixNano()
@@ -30,6 +58,8 @@ var (
 	Version = App.Command("version", "Display information about [ tsak2 ]")
 	VTable  = Version.Flag("table", "Display [ tsak2 ] inner information .").Default("true").Bool()
 
-	Shell = App.Command("shell", "Run tsak2 in interactive shell")
-	Run   = App.Command("run", "Run tsak2 in non-interactive mode")
+	Shell      = App.Command("shell", "Run tsak2 in interactive shell")
+	Run        = App.Command("run", "Run tsak2 in non-interactive mode")
+	ShowResult = Run.Flag("result", "Display result of scripts execution as it returned by LISP").Default("true").Bool()
+	Scripts    = FileList(Run.Arg("Scripts", "TSAK-scripts to execute"))
 )
