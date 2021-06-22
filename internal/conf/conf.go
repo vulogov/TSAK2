@@ -61,5 +61,7 @@ var (
 	Shell      = App.Command("shell", "Run tsak2 in interactive shell")
 	Run        = App.Command("run", "Run tsak2 in non-interactive mode")
 	ShowResult = Run.Flag("result", "Display result of scripts execution as it returned by LISP").Default("true").Bool()
+	ERloop     = Run.Flag("erloop", "ExitRequest event loop").Default("false").Bool()
+	WGloop     = Run.Flag("loop", "WorkGroup event loop").Default("false").Bool()
 	Scripts    = FileList(Run.Arg("Scripts", "TSAK-scripts to execute"))
 )

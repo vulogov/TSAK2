@@ -61,16 +61,18 @@ func InitSignal() {
 	go signalHandler()
 }
 
-func Reserve(n int) {
+func Reserve(n int) int {
 	ng = ng + n
 	wg.Add(n)
+	return ng
 }
 
-func Release(n int) {
+func Release(n int) int {
 	ng = ng - n
 	for i := 0; i < n; i++ {
 		wg.Done()
 	}
+	return ng
 }
 
 func Loop() {

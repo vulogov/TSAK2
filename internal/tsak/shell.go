@@ -53,6 +53,10 @@ func Shell() {
 				continue
 			}
 			log.Infof("RETURNED: %v", res.SexpString(nil))
+			if signal.ExitRequested() {
+				log.Infof("EXIT REQUESTED: %v", signal.Len())
+				break
+			}
 		} else if err == liner.ErrPromptAborted {
 			log.Error("Aborted")
 			signal.ExitRequest()

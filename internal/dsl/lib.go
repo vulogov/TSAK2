@@ -24,6 +24,7 @@ func TsakBuiltinFunctions() map[string]zygo.ZlispUserFunction {
 		SnmpMetricFunctions(),
 		MIBSFunctions(),
 		pipe.PipeFunctions(),
+		SignalFunctions(),
 	)
 }
 

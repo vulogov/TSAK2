@@ -1,0 +1,7 @@
+(log.Info "We will spawn goroutine")
+(go ((fn []
+    (log.Info "Before quit")
+    (log.Info "After quit %d\n" (quit))
+  ))
+)
+(log.Info "Main script terminated")

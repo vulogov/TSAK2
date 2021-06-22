@@ -23,6 +23,7 @@ func TsakStandardSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
 	TsakPipeSetup(cfg, env)
 	TelemetryObservationPackageSetup(cfg, env)
 	SnmpMetricPackageSetup(cfg, env)
+	SignalPackageSetup(cfg, env)
 }
 
 func TsakCustomSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
