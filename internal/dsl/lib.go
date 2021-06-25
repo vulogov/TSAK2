@@ -30,6 +30,7 @@ func TsakBuiltinFunctions() map[string]zygo.ZlispUserFunction {
 		SignalFunctions(),
 		GeneratorFunctions(),
 		SleepFunctions(),
+		NowFunctions(),
 	)
 }
 

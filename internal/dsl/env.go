@@ -26,6 +26,7 @@ func TsakStandardSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
 	SignalPackageSetup(cfg, env)
 	GeneratorPackageSetup(cfg, env)
 	SleepPackageSetup(cfg, env)
+	NowPackageSetup(cfg, env)
 }
 
 func TsakCustomSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
