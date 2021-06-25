@@ -16,7 +16,9 @@ func Run() {
 	Init()
 	log.Debug("[ tsak2 ] tsak.Run() is reached")
 	cfg := dsl.InitDSL()
+	dsl.Cfg = cfg
 	env := dsl.MakeEnvironment(cfg)
+	dsl.Env = env
 	if *conf.BootStrap != "" {
 		log.Debugf("TSAK_script bootstrap file: %v", *conf.BootStrap)
 		file, err := os.Open(*conf.BootStrap)

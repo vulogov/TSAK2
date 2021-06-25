@@ -26,7 +26,7 @@ require (
 	github.com/shurcooL/go-goon v0.0.0-20210110234559-7585751d9a17 // indirect
 	github.com/tinylib/msgp v1.1.5 // indirect
 	github.com/tomlazar/table v0.1.0
-	github.com/twsnmp/gosnmp v1.28.4
+	github.com/twsnmp/gosnmp v1.32.2
 	github.com/ugorji/go v1.2.6 // indirect
 	golang.org/x/sys v0.0.0-20210510120138-977fb7262007 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6

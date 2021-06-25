@@ -29,7 +29,9 @@ func Shell() {
 		log.Errorf("[ tsak2 ] Error accessing to a shell history file:  %v", fnHistory)
 	}
 	cfg := dsl.InitDSL()
+	dsl.Cfg = cfg
 	env := dsl.MakeEnvironment(cfg)
+	dsl.Env = env
 	log.Debugf("TSAK_script bootstrap file: %v", *conf.BootStrap)
 	file, err := os.Open(*conf.BootStrap)
 	err = env.LoadFile(file)

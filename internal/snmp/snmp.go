@@ -1,8 +1,8 @@
 package snmp
 
 import (
-	"log"
-	"os"
+	// "log"
+	// "os"
 	"time"
 
 	// "github.com/pieterclaerhout/go-log"
@@ -33,11 +33,11 @@ func InitSNMPAgent() {
 	Gsnmp.Version = gosnmp.Version2c
 	Gsnmp.Timeout = time.Duration(time.Second * 3)
 	Gsnmp.Retries = 0
-	Gsnmp.Logger = log.New(os.Stdout, "", 0)
+	// Gsnmp.Logger = log.New(os.Stdout, "", 0)
 	AgentSnmp.Port = int(*conf.SNMPPort)
 	AgentSnmp.IPAddr = *conf.SNMPListen
 	AgentSnmp.Snmp = Gsnmp
 	AgentSnmp.SupportSnmpMIB = false
-	AgentSnmp.Logger = log.New(os.Stdout, "", 0)
+	// AgentSnmp.Logger = log.New(os.Stdout, "", 0)
 	go SnmpAgentLoop()
 }

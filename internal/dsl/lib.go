@@ -8,6 +8,9 @@ import (
 	"github.com/vulogov/TSAK2/internal/pipe"
 )
 
+var Env *Zlisp
+var Cfg *ZlispConfig
+
 func GetTheAnswer(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 	log.Debug("Someone is looking for an answer. Well it is 42")
 	return &SexpInt{Val: int64(42)}, nil
@@ -25,6 +28,7 @@ func TsakBuiltinFunctions() map[string]zygo.ZlispUserFunction {
 		MIBSFunctions(),
 		pipe.PipeFunctions(),
 		SignalFunctions(),
+		GeneratorFunctions(),
 	)
 }
 

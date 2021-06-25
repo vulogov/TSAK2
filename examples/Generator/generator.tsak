@@ -1,0 +1,7 @@
+(def g (GEN HistorySize:128))
+(call g MakeInt: "testsrc" "testkey" "((fn [] 42))" 10 )
+(call g Compute: "testsrc" "testkey")
+(call g Compute: "testsrc" "testkey")
+(printf "Number of generated elements %v\n" (car (call g Len: "testsrc" "testkey")))
+(printf "Last generated element %v\n" (car (call g GetInt: "testsrc" "testkey")))
+(printf "History %v\n" (car (call g GetHistory: "testsrc" "testkey" )))
