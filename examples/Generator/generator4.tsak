@@ -1,0 +1,14 @@
+(def mysources ["snmp"])
+(generator.Make mysources ["1.3.6.1.2.1.1.3"] "(+ 1 (generator.Last Source Key))" 40)
+(generator.Make mysources ["1.3.6.1.2.1.1.4"] "(fake.Name)" 40)
+(generator.Make mysources ["1.3.6.1.2.1.1.6"] "(fake.Address)" 40)
+
+(snmpmetric.Set ["1.3.6.1.2.1.1.3"] 0)
+(snmpmetric.Set ["1.3.6.1.2.1.1.4"] "")
+(snmpmetric.Set ["1.3.6.1.2.1.1.6"] "")
+
+(generator.SetInterval 3)
+(for [(def i 0) (< i 20) (def i (+ 1 i))]
+  (sleep.Second 3)
+)
+(quit)

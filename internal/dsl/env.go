@@ -27,6 +27,7 @@ func TsakStandardSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
 	GeneratorPackageSetup(cfg, env)
 	SleepPackageSetup(cfg, env)
 	NowPackageSetup(cfg, env)
+	FakePackageSetup(cfg, env)
 }
 
 func TsakCustomSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
@@ -35,4 +36,5 @@ func TsakCustomSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
 	_, err := env.EvalString(callFun)
 	PanicOn(err)
 	TsakGlobals(cfg, env)
+	GenerateMetricStart()
 }

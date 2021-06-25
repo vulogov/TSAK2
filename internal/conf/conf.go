@@ -55,8 +55,10 @@ var (
 	// Bootstrap-related
 	BootStrap = App.Flag("boot", "TSAK script for the environment bootstrap").ExistingFile()
 
-	Version = App.Command("version", "Display information about [ tsak2 ]")
-	VTable  = Version.Flag("table", "Display [ tsak2 ] inner information .").Default("true").Bool()
+	// Generator and pipeline
+	GenInterval = App.Flag("gen", "How often to run data generator").Default("60").Int()
+	Version     = App.Command("version", "Display information about [ tsak2 ]")
+	VTable      = Version.Flag("table", "Display [ tsak2 ] inner information .").Default("true").Bool()
 
 	Shell      = App.Command("shell", "Run tsak2 in interactive shell")
 	Run        = App.Command("run", "Run tsak2 in non-interactive mode")

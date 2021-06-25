@@ -1,5 +1,5 @@
 pre:
-	@echo "=== TSAK.clips === [Preinstallation of some stuff]"
+	@echo "=== TSAK2 === [Preinstallation of some stuff]"
 	go get github.com/client9/misspell/cmd/misspell
 	go get golang.org/x/tools/cmd/godoc
 	go get github.com/llorllale/go-gitlint/cmd/go-gitlint
@@ -17,3 +17,5 @@ pre:
 	go mod download github.com/stretchr/testify
 	go get github.com/mattn/go-sqlite3
 	go get github.com/nikhilsaraf/go-tools/multithreading
+	go get syreclabs.com/go/faker
+	go get github.com/common-nighthawk/go-figure
