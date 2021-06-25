@@ -29,6 +29,7 @@ func TsakBuiltinFunctions() map[string]zygo.ZlispUserFunction {
 		pipe.PipeFunctions(),
 		SignalFunctions(),
 		GeneratorFunctions(),
+		SleepFunctions(),
 	)
 }
 
