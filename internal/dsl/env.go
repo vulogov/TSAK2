@@ -28,6 +28,10 @@ func TsakStandardSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
 	SleepPackageSetup(cfg, env)
 	NowPackageSetup(cfg, env)
 	FakePackageSetup(cfg, env)
+	MathPackageSetup(cfg, env)
+	RandPackageSetup(cfg, env)
+	NormalizePackageSetup(cfg, env)
+	FloatPackageSetup(cfg, env)
 }
 
 func TsakCustomSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {

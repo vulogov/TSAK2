@@ -32,6 +32,10 @@ func TsakBuiltinFunctions() map[string]zygo.ZlispUserFunction {
 		SleepFunctions(),
 		NowFunctions(),
 		FakeFunctions(),
+		MathFunctions(),
+		RandFunctions(),
+		NormalizeFunctions(),
+		FloatFunctions(),
 	)
 }
 

@@ -19,3 +19,5 @@ pre:
 	go get github.com/nikhilsaraf/go-tools/multithreading
 	go get syreclabs.com/go/faker
 	go get github.com/common-nighthawk/go-figure
+	go get -u gonum.org/v1/gonum/...
+	go get github.com/pieterclaerhout/go-formatter@v1.0.4

@@ -1,0 +1,12 @@
+(def mysources ["testsource"])
+(def mykeys ["testkey1" "testkey2"])
+(generator.Make mysources mykeys "(float.LogSpan 10 (generator.Last Source Key) (+ 10 (generator.Last Source Key)))" 1.0)
+// (generator.Make mysources mykeys "((fn [] [1 2 3]))" 0)
+(generator.SetInterval 3)
+(for [(def i 0) (< i 20) (def i (+ 1 i))]
+  (printf "%d iteration \n" i)
+  (println (generator.Last "testsource" "testkey1")  )
+  (println (generator.History "testsource" "testkey1" ) )
+  (sleep.Second 3)
+)
+(quit)

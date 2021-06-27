@@ -21,13 +21,14 @@ var GenInterval int64
 var PipelineInterval int64
 
 type GEN struct {
-	Current     cmap.Cmap
-	History     cmap.Cmap
-	X           cmap.Cmap
-	Gen         cmap.Cmap
-	Default     interface{}
-	HistorySize int64
-	Lock        sync.Mutex
+	Current      cmap.Cmap
+	History      cmap.Cmap
+	X            cmap.Cmap
+	Pregenerated cmap.Cmap
+	Gen          cmap.Cmap
+	Default      interface{}
+	HistorySize  int64
+	Lock         sync.Mutex
 }
 
 func (gen *GEN) _create(source, name string, generator string, defval interface{}) bool {
@@ -42,6 +43,7 @@ func (gen *GEN) _create(source, name string, generator string, defval interface{
 	gen.Gen.Store(key, generator)
 	gen.History.Store(key, deque.NewDeque())
 	gen.X.Store(key, deque.NewDeque())
+	gen.Pregenerated.Store(key, deque.NewDeque())
 	return true
 }
 
@@ -57,11 +59,28 @@ func (gen *GEN) MakeString(source, name string, generator string, val string) bo
 	return gen._create(source, name, generator, val)
 }
 
+func (gen *GEN) Pregenerate(source, name string, data []interface{}) int {
+	n := len(data)
+	key := makekey(source, name)
+	log.Debugf("G: %v", data)
+	p, ok := gen.Pregenerated.Load(key)
+	if !ok {
+		log.Errorf("Generator: Can not find pregenerator queue for %s: %v", key, ok)
+		return 0
+	}
+	for _, v := range data {
+		log.Debugf("Generator: pregenerated value for %s is %v", key, v)
+		p.(deque.Deque).PushBack(v)
+	}
+	return n
+}
+
 func (gen *GEN) Get(source, name string) interface{} {
 	key := makekey(source, name)
 	h, ok := gen.History.Load(key)
 	if !ok {
 		log.Errorf("GEN: Unable to locate history for %v", key)
+		fmt.Println("AAA")
 		return nil
 	}
 	if h.(deque.Deque).Len() == 0 {
@@ -152,18 +171,29 @@ func (gen *GEN) Compute(source, name string) interface{} {
 	switch err {
 	case nil:
 	case NoExpressionsFound:
-		log.Errorf("Error: %v", err)
+		log.Errorf("Expression Error: %v", err)
 		Env.Clear()
 		return nil
 	default:
-		log.Errorf("Error: %v", err)
+		log.Errorf("General Error: %v", err)
 		fmt.Print(Env.GetStackTrace(err))
 		Env.Clear()
 		return nil
 	}
 	switch e := r.(type) {
 	case *SexpArray:
-		res = AsAny(e.Val[len(e.Val)-1])
+		log.Debugf("Generator: pregenerated array submitted for %s", key)
+		p, ok := gen.Pregenerated.Load(key)
+		if !ok {
+			res = AsAny(e.Val[len(e.Val)-1])
+			break
+		}
+		if p.(deque.Deque).Len() == 0 {
+			gen.Pregenerate(source, name, ArrayofSomethingToArray(e))
+			log.Debugf("Generator: fill pregenerated for %s", key)
+		}
+		res = p.(deque.Deque).PopFront()
+		log.Debugf("RES %v", res)
 	default:
 		res = AsAny(e)
 	}
