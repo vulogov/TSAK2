@@ -87,6 +87,47 @@ func FloatTo(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 	return res, nil
 }
 
+func FloatBytes(env *Zlisp, name string, args []Sexp) (Sexp, error) {
+	res := make([]float64, 0)
+	if len(args) == 0 {
+		return SexpNull, WrongNargs
+	}
+	for _, v := range args {
+		switch e := v.(type) {
+		case *SexpInt:
+			res = append(res, float64(e.Val))
+		case *SexpFloat:
+			res = append(res, float64(e.Val))
+		case *SexpArray:
+			for _, v1 := range e.Val {
+				switch e1 := v1.(type) {
+				case *SexpInt:
+					res = append(res, float64(e1.Val))
+				case *SexpFloat:
+					res = append(res, float64(e1.Val))
+				default:
+					return SexpNull, fmt.Errorf("Invalid data in float.Bytes inner array conversion")
+				}
+			}
+		default:
+			return SexpNull, fmt.Errorf("Invalid data in float.Bytes conversion")
+		}
+	}
+	switch name {
+	case "float.Bytes":
+		return ArrayofFloatsToLispArray(env, res), nil
+	case "float.KBytes":
+		return ArrayofFloatsToLispArray(env, ArrayOfFloatsMulOn(res, 1024)), nil
+	case "float.MBytes":
+		return ArrayofFloatsToLispArray(env, ArrayOfFloatsMulOn(res, (1024*1024))), nil
+	case "float.GBytes":
+		return ArrayofFloatsToLispArray(env, ArrayOfFloatsMulOn(res, (1024*1024*1024))), nil
+	case "float.Int":
+		return ArrayofFloatsToIntLispArray(env, res), nil
+	}
+	return SexpNull, fmt.Errorf("I do not know how to perform this conversion: %s", name)
+}
+
 func FloatFunctions() map[string]ZlispUserFunction {
 	return map[string]ZlispUserFunction{
 		"floatto":      FloatTo,
@@ -95,6 +136,11 @@ func FloatFunctions() map[string]ZlispUserFunction {
 		"floatmul":     FloatMath,
 		"floatdot":     FloatMath,
 		"floatlogspan": FloatLogSpan,
+		"floatbytes":   FloatBytes,
+		"floatkbytes":  FloatBytes,
+		"floatmbytes":  FloatBytes,
+		"floatgbytes":  FloatBytes,
+		"floatint":     FloatBytes,
 	}
 }
 
@@ -106,6 +152,11 @@ func FloatPackageSetup(cfg *ZlispConfig, env *Zlisp) {
 			 Mul := floatmul;
 			 Dot := floatdot;
 			 LogSpan := floatlogspan;
+			 Bytes := floatbytes;
+			 KBytes := floatkbytes;
+			 MBytes := floatmbytes;
+			 GBytes := floatgbytes;
+			 Int := floatint;
      }
   ))`
 	_, err := env.EvalString(myPkg)

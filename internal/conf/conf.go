@@ -57,8 +57,18 @@ var (
 
 	// Generator and pipeline
 	GenInterval = App.Flag("gen", "How often to run data generator").Default("60").Int()
-	Version     = App.Command("version", "Display information about [ tsak2 ]")
-	VTable      = Version.Flag("table", "Display [ tsak2 ] inner information .").Default("true").Bool()
+
+	// New Relic related
+	NRapi     = App.Flag("nrapi", "New Relic API key").Default("").String()
+	NRapiq    = App.Flag("nrapiq", "New Relic Query API key").Default("").String()
+	NRaccount = App.Flag("nraccount", "New Relic Account ID").Default("").String()
+	NRlogapi  = App.Flag("nrlogapi", "New Relic Log API").Default("https://log-api.newrelic.com/log/v1").String()
+	NRevtapi  = App.Flag("nrevtapi", "New Relic Event API").Default("https://insights-collector.newrelic.com/v1/accounts/%s/events").String()
+	NRmetapi  = App.Flag("nrmetapi", "New Relic Metrics API").Default("https://metric-api.newrelic.com/metric/v1").String()
+	NRqryapi  = App.Flag("nrqryapi", "New Relic Query API").Default("https://insights-api.newrelic.com/v1/accounts/%s/query?nrql=%s").String()
+
+	Version = App.Command("version", "Display information about [ tsak2 ]")
+	VTable  = Version.Flag("table", "Display [ tsak2 ] inner information .").Default("true").Bool()
 
 	Shell      = App.Command("shell", "Run tsak2 in interactive shell")
 	Run        = App.Command("run", "Run tsak2 in non-interactive mode")

@@ -72,3 +72,18 @@ func ArrayofFloatsToLispArray(env *Zlisp, arr []float64) Sexp {
 	}
 	return res
 }
+
+func ArrayofFloatsToIntLispArray(env *Zlisp, arr []float64) Sexp {
+	res := &SexpArray{Val: make([]Sexp, 0), Env: env, Typ: Int64RT}
+	for _, v := range arr {
+		res.Val = append(res.Val, &SexpInt{Val: int64(v)})
+	}
+	return res
+}
+
+func ArrayOfFloatsMulOn(arr []float64, m float64) []float64 {
+	for n, v := range arr {
+		arr[n] = v * m
+	}
+	return arr
+}
