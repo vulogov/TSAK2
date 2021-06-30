@@ -36,6 +36,7 @@ func TsakBuiltinFunctions() map[string]zygo.ZlispUserFunction {
 		RandFunctions(),
 		NormalizeFunctions(),
 		FloatFunctions(),
+		PredictorFunctions(),
 	)
 }
 
@@ -53,4 +54,5 @@ func AllEnvInitBeforeCreationOfEnv() {
 	MIBSDatatypeSetup()
 	GeneratorSetup()
 	RandomSetup()
+	PredictorSetup()
 }
