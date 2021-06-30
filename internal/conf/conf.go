@@ -51,6 +51,8 @@ var (
 	SNMPListen    = App.Flag("snmplisten", "IP Address for internal TSAK SNMP agent").Default("127.0.0.1").String()
 	SNMPPort      = App.Flag("snmpport", "Port for internal TSAK SNMP agent").Default("6161").Int()
 	SNMPMibsdb    = App.Flag("mibs", "Path to SNMP MIB database").Default("./mibs/nri-snmp.db").ExistingFile()
+	TRAPPort      = App.Flag("trapport", "Port for internal TSAK TRAP receiver").Default("6162").Int()
+	TRAPListen    = App.Flag("traplisten", "IP Address for internal TSAK TRAP Receiver").Default("127.0.0.1").String()
 
 	// Bootstrap-related
 	BootStrap = App.Flag("boot", "TSAK script for the environment bootstrap").ExistingFile()

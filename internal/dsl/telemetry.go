@@ -256,12 +256,24 @@ func TOMAdd(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 
 	switch v := args[2].(type) {
 	case *SexpInt:
+		if !TOM.Has(AsString(args[0]), AsString(args[1])) {
+			TOM.CreateInt(AsString(args[0]), AsString(args[1]), int64(v.Val))
+		}
 		n += TOM.AddInt(AsString(args[0]), AsString(args[1]), v.Val)
 	case *SexpFloat:
+		if !TOM.Has(AsString(args[0]), AsString(args[1])) {
+			TOM.CreateFloat(AsString(args[0]), AsString(args[1]), float64(v.Val))
+		}
 		n += TOM.AddFloat(AsString(args[0]), AsString(args[1]), v.Val)
 	case *SexpStr:
+		if !TOM.Has(AsString(args[0]), AsString(args[1])) {
+			TOM.CreateString(AsString(args[0]), AsString(args[1]), AsString(args[2]))
+		}
 		n += TOM.AddString(AsString(args[0]), AsString(args[1]), AsString(args[2]))
 	default:
+		if !TOM.Has(AsString(args[0]), AsString(args[1])) {
+			TOM.CreateString(AsString(args[0]), AsString(args[1]), AsString(args[2]))
+		}
 		n += TOM.AddString(AsString(args[0]), AsString(args[1]), AsString(args[2]))
 	}
 	if len(args) == 4 {

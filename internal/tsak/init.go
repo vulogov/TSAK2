@@ -13,4 +13,5 @@ func Init() {
 	log.Debug("[ tsak2 ] tsak.Init() is reached")
 	signal.InitSignal()
 	snmp.InitSNMPAgent()
+	snmp.InitSNMPTrapReceiver()
 }

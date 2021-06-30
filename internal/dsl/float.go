@@ -2,10 +2,60 @@ package dsl
 
 import (
 	"fmt"
+	"sort"
 
 	. "github.com/glycerine/zygomys/zygo"
 	floats "gonum.org/v1/gonum/floats"
+	distuv "gonum.org/v1/gonum/stat/distuv"
+	// distmv "gonum.org/v1/gonum/stat/distmv"
 )
+
+func RouletteDrawN(p []float64, n int) ([]int, error) {
+	if p == nil || len(p) == 0 {
+		return nil, fmt.Errorf("Invalid probability weights: %v", p)
+	}
+	// Initialization: create the discrete CDF
+	// We know that cdf is sorted in ascending order
+	cdf := make([]float64, len(p))
+	floats.CumSum(cdf, p)
+	// Generation:
+	// 1. Generate a uniformly-random value x in the range [0,1)
+	// 2. Using a binary search, find the index of the smallest element in cdf larger than x
+	var val float64
+	indices := make([]int, n)
+	for i := range indices {
+		// multiply the sample with the largest CDF value; easier than normalizing to [0,1)
+		val = distuv.UnitUniform.Rand() * cdf[len(cdf)-1]
+		// Search returns the smallest index i such that cdf[i] > val
+		indices[i] = sort.Search(len(cdf), func(i int) bool { return cdf[i] > val })
+	}
+
+	return indices, nil
+}
+
+func FloatRandomDraw(env *Zlisp, name string, args []Sexp) (Sexp, error) {
+	if len(args) != 2 {
+		return SexpNull, WrongNargs
+	}
+	if !IsArray(args[0]) {
+		return SexpNull, fmt.Errorf("First argument must be array in: %v", name)
+	}
+	if !IsInt(args[1]) {
+		return SexpNull, fmt.Errorf("First argument must be array in: %v", name)
+	}
+	arr := ArrayofFloatsToArray(args[0])
+	idx, err := RouletteDrawN(arr, int(AsAny(args[1]).(int64)))
+	PanicOn(err)
+	return ArrayofIntToFloatLispArray(env, idx), nil
+}
+
+func FloatRandom(env *Zlisp, name string, args []Sexp) (Sexp, error) {
+	if len(args) != 0 {
+		return SexpNull, WrongNargs
+	}
+	// return ArrayofFloatsToFloatLispArray(env, ), nil
+	return SexpNull, WrongNargs
+}
 
 func FloatLogSpan(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 	if len(args) != 3 {
@@ -130,17 +180,19 @@ func FloatBytes(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 
 func FloatFunctions() map[string]ZlispUserFunction {
 	return map[string]ZlispUserFunction{
-		"floatto":      FloatTo,
-		"floatadd":     FloatMath,
-		"floatdiv":     FloatMath,
-		"floatmul":     FloatMath,
-		"floatdot":     FloatMath,
-		"floatlogspan": FloatLogSpan,
-		"floatbytes":   FloatBytes,
-		"floatkbytes":  FloatBytes,
-		"floatmbytes":  FloatBytes,
-		"floatgbytes":  FloatBytes,
-		"floatint":     FloatBytes,
+		"floatto":         FloatTo,
+		"floatadd":        FloatMath,
+		"floatdiv":        FloatMath,
+		"floatmul":        FloatMath,
+		"floatdot":        FloatMath,
+		"floatlogspan":    FloatLogSpan,
+		"floatbytes":      FloatBytes,
+		"floatkbytes":     FloatBytes,
+		"floatmbytes":     FloatBytes,
+		"floatgbytes":     FloatBytes,
+		"floatint":        FloatBytes,
+		"floatrandomdraw": FloatRandomDraw,
+		"floatrandom":     FloatRandom,
 	}
 }
 
@@ -152,6 +204,7 @@ func FloatPackageSetup(cfg *ZlispConfig, env *Zlisp) {
 			 Mul := floatmul;
 			 Dot := floatdot;
 			 LogSpan := floatlogspan;
+			 RandomDrawSpan := floatrandomdraw;
 			 Bytes := floatbytes;
 			 KBytes := floatkbytes;
 			 MBytes := floatmbytes;

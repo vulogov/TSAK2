@@ -52,4 +52,5 @@ func AllEnvInitBeforeCreationOfEnv() {
 	TelemetryObservationMatrixSetup()
 	MIBSDatatypeSetup()
 	GeneratorSetup()
+	RandomSetup()
 }
