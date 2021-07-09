@@ -1,11 +1,11 @@
 package dsl
 
 import (
-	"github.com/glycerine/zygomys/zygo"
+	. "github.com/glycerine/zygomys/zygo"
 	"github.com/pieterclaerhout/go-log"
 )
 
-func TsakPipeSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
+func TsakPipeSetup(cfg *ZlispConfig, env *Zlisp) {
 	dPkg := `(def pipe (package "pipe"
      { Create := pipecreate;
        Send := pipesend;
@@ -17,7 +17,7 @@ func TsakPipeSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
 	PanicOn(err)
 }
 
-func TsakStandardSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
+func TsakStandardSetup(cfg *ZlispConfig, env *Zlisp) {
 	log.Debug("DSL setup for TSAK is reached")
 	TsakLogSetup(cfg, env)
 	TsakPipeSetup(cfg, env)
@@ -35,7 +35,7 @@ func TsakStandardSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
 	PredictorPackageSetup(cfg, env)
 }
 
-func TsakCustomSetup(cfg *zygo.ZlispConfig, env *zygo.Zlisp) {
+func TsakCustomSetup(cfg *ZlispConfig, env *Zlisp) {
 	log.Debug("DSL custom setup for TSAK is reached")
 	callFun := `(def call _method)`
 	_, err := env.EvalString(callFun)

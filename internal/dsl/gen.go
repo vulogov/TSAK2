@@ -80,7 +80,6 @@ func (gen *GEN) Get(source, name string) interface{} {
 	h, ok := gen.History.Load(key)
 	if !ok {
 		log.Errorf("GEN: Unable to locate history for %v", key)
-		fmt.Println("AAA")
 		return nil
 	}
 	if h.(deque.Deque).Len() == 0 {
