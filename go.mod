@@ -28,7 +28,7 @@ require (
 	github.com/tomlazar/table v0.1.0
 	github.com/twsnmp/gosnmp v1.32.2
 	github.com/ugorji/go v1.2.6 // indirect
-	golang.org/x/exp v0.0.0-20210708220649-8d2525e7e0e6 // indirect
+	golang.org/x/exp v0.0.0-20210712160552-8235cf48b5f6 // indirect
 	golang.org/x/sys v0.0.0-20210510120138-977fb7262007 // indirect
 	gonum.org/v1/gonum v0.9.3
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6

@@ -66,7 +66,7 @@ func InitSNMPAgent() {
 	AgentSnmp.Port = int(*conf.SNMPPort)
 	AgentSnmp.IPAddr = *conf.SNMPListen
 	AgentSnmp.Snmp = Gsnmp
-	AgentSnmp.SupportSnmpMIB = false
+	AgentSnmp.SupportSnmpMIB = true
 	go SnmpAgentLoop()
 }
 

@@ -11,7 +11,7 @@ import (
 
 func Version() {
 	Init()
-	log.Debug("[ tsak2 ] tsak.Version() is reached")
-	banner.Banner(fmt.Sprintf("[ tsak2 %v ]", conf.BVersion))
+	log.Debug("[ TSAK2 ] tsak.Version() is reached")
+	banner.Banner(fmt.Sprintf("[ TSAK2 %v ]", conf.BVersion))
 	banner.Table()
 }

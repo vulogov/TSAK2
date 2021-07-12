@@ -19,6 +19,6 @@ func Init() {
 	} else {
 		log.PrintColors = false
 	}
-	log.Debug("[ tsak2 ] console log is configured")
+	log.Debug("[ TSAK2 ] console log is configured")
 	InitLogProc()
 }

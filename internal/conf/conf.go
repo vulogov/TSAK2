@@ -39,12 +39,12 @@ func FileList(s kingpin.Settings) (target *[]string) {
 var (
 	seed    = time.Now().UTC().UnixNano()
 	NG      = namegenerator.NewNameGenerator(seed)
-	App     = kingpin.New("tsak2", "[ tsak2 ] Telemetry Swiss Army Knife")
+	App     = kingpin.New("TSAK2", "[ TSAK2 ] Telemetry Swiss Army Knife")
 	Debug   = App.Flag("debug", "Enable debug mode.").Default("false").Bool()
 	Color   = App.Flag("color", "--color : Enable colors on terminal --no-color : Disable colors .").Default("true").Bool()
 	ID      = App.Flag("id", "Unique application ID").Default(xid.New().String()).String()
 	Name    = App.Flag("name", "Application name").Default(NG.Generate()).String()
-	VBanner = App.Flag("banner", "Display [ tsak2 ] banner .").Default("false").Bool()
+	VBanner = App.Flag("banner", "Display [ TSAK2 ] banner .").Default("false").Bool()
 
 	// SNMP-related configuration
 	SNMPCommunity = App.Flag("community", "SNMP 2c community string").Default("public").String()
@@ -69,11 +69,11 @@ var (
 	NRmetapi  = App.Flag("nrmetapi", "New Relic Metrics API").Default("https://metric-api.newrelic.com/metric/v1").String()
 	NRqryapi  = App.Flag("nrqryapi", "New Relic Query API").Default("https://insights-api.newrelic.com/v1/accounts/%s/query?nrql=%s").String()
 
-	Version = App.Command("version", "Display information about [ tsak2 ]")
-	VTable  = Version.Flag("table", "Display [ tsak2 ] inner information .").Default("true").Bool()
+	Version = App.Command("version", "Display information about [ TSAK2 ]")
+	VTable  = Version.Flag("table", "Display [ TSAK2 ] inner information .").Default("true").Bool()
 
-	Shell      = App.Command("shell", "Run tsak2 in interactive shell")
-	Run        = App.Command("run", "Run tsak2 in non-interactive mode")
+	Shell      = App.Command("shell", "Run TSAK2 in interactive shell")
+	Run        = App.Command("run", "Run TSAK2 in non-interactive mode")
 	ShowResult = Run.Flag("result", "Display result of scripts execution as it returned by LISP").Default("true").Bool()
 	ERloop     = Run.Flag("erloop", "ExitRequest event loop").Default("false").Bool()
 	WGloop     = Run.Flag("loop", "WorkGroup event loop").Default("false").Bool()

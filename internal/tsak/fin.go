@@ -7,6 +7,6 @@ import (
 )
 
 func Fin() {
-	log.Debug("[ tsak2 ] tsak.Fin() is reached")
+	log.Debug("[ TSAK2 ] tsak.Fin() is reached")
 	banner.Banner("[ Zay Gezunt ]")
 }

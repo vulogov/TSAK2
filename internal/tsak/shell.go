@@ -17,8 +17,8 @@ import (
 func Shell() {
 	Init()
 	var fnHistory = filepath.Join(os.TempDir(), fmt.Sprintf(".tsak_history.%v", *conf.ID))
-	log.Debug("[ tsak2 ] tsak.Shell() is reached")
-	log.Debugf("[ tsak2 ] Shell history is stored in %v", fnHistory)
+	log.Debug("[ TSAK2 ] tsak.Shell() is reached")
+	log.Debugf("[ TSAK2 ] Shell history is stored in %v", fnHistory)
 
 	line := liner.NewLiner()
 
@@ -26,7 +26,7 @@ func Shell() {
 		line.ReadHistory(f)
 		f.Close()
 	} else {
-		log.Errorf("[ tsak2 ] Error accessing to a shell history file:  %v", fnHistory)
+		log.Errorf("[ TSAK2 ] Error accessing to a shell history file:  %v", fnHistory)
 	}
 	cfg := dsl.InitDSL()
 	dsl.Cfg = cfg

@@ -14,6 +14,7 @@ import (
 )
 
 func tomSnmpGet(oid string) interface{} {
+	log.Debugf("Requested: %v", oid)
 	res := TOM.Get("snmp", oid)
 	return res
 }
@@ -23,6 +24,7 @@ func snmpAgentSet(oid string, defval interface{}) {
 	case int, int64, uint32, uint64:
 		TOM.AddInt("snmp", oid, int64(e.(int64)))
 		TOM.SetSize("snmp", oid, 34)
+		log.Debugf("Configured: %v", oid)
 		snmp.AgentSnmp.AddMibList(oid, gosnmp.Integer, tomSnmpGet)
 	case float64:
 		TOM.AddFloat("snmp", oid, float64(e))

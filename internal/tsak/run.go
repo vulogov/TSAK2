@@ -14,7 +14,7 @@ import (
 
 func Run() {
 	Init()
-	log.Debug("[ tsak2 ] tsak.Run() is reached")
+	log.Debug("[ TSAK2 ] tsak.Run() is reached")
 	cfg := dsl.InitDSL()
 	dsl.Cfg = cfg
 	env := dsl.MakeEnvironment(cfg)

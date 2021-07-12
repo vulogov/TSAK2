@@ -3,6 +3,6 @@
 (generator.Make mysources ["1.3.6.1.2.1.1.4"] "(fake.Name)" (fake.Name))
 (generator.Make mysources ["1.3.6.1.2.1.1.6"] "(fake.Address)" 0)
 
-(snmpmetric.Set ["1.3.6.1.2.1.1.3"] 0)
-(snmpmetric.Set ["1.3.6.1.2.1.1.4"] (fake.Name))
-(snmpmetric.Set ["1.3.6.1.2.1.1.6"] (fake.Name))
+(snmpmetric.Set [".1.3.6.1.2.1.1.3"] 0)
+// (snmpmetric.Set ["1.3.6.1.2.1.1.4"] (fake.Name))
+// (snmpmetric.Set ["1.3.6.1.2.1.1.6"] (fake.Name))
