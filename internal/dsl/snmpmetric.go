@@ -25,13 +25,13 @@ func snmpAgentSet(oid string, defval interface{}) {
 		TOM.AddInt("snmp", oid, int64(e.(int64)))
 		TOM.SetSize("snmp", oid, 34)
 		log.Debugf("Configured: %v", oid)
-		snmp.AgentSnmp.AddMibList(oid, gosnmp.Integer, tomSnmpGet)
+		snmp.AgentSnmp.AddMibList(oid, gosnmp.Integer, func(oid string) interface{} { return TOM.Get("snmp", oid) })
 	case float64:
 		TOM.AddFloat("snmp", oid, float64(e))
-		snmp.AgentSnmp.AddMibList(oid, gosnmp.OpaqueFloat, tomSnmpGet)
+		snmp.AgentSnmp.AddMibList(oid, gosnmp.OpaqueFloat, func(oid string) interface{} { return TOM.Get("snmp", oid) })
 	case string:
 		TOM.AddString("snmp", oid, string(e))
-		snmp.AgentSnmp.AddMibList(oid, gosnmp.OctetString, tomSnmpGet)
+		snmp.AgentSnmp.AddMibList(oid, gosnmp.OctetString, func(oid string) interface{} { return TOM.Get("snmp", oid) })
 	}
 }
 
