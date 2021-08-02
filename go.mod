@@ -17,7 +17,7 @@ require (
 	github.com/gopherjs/gopherjs v0.0.0-20210519211817-2312de329ae4 // indirect
 	github.com/lrita/cmap v0.0.0-20200818170753-e987cd3dfa73
 	github.com/mattn/go-runewidth v0.0.10 // indirect
-	github.com/mattn/go-sqlite3 v1.14.7
+	github.com/mattn/go-sqlite3 v1.14.8
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
 	github.com/peterh/liner v1.2.1
 	github.com/pieterclaerhout/go-log v1.14.0
@@ -28,8 +28,8 @@ require (
 	github.com/tomlazar/table v0.1.0
 	github.com/twsnmp/gosnmp v1.32.2
 	github.com/ugorji/go v1.2.6 // indirect
-	golang.org/x/exp v0.0.0-20210712160552-8235cf48b5f6 // indirect
-	golang.org/x/sys v0.0.0-20210510120138-977fb7262007 // indirect
+	golang.org/x/exp v0.0.0-20210729172720-737cce5152fc // indirect
+	golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1 // indirect
 	gonum.org/v1/gonum v0.9.3
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	gopkg.in/yaml.v3 v3.0.0-20200605160147-a5ece683394c // indirect
