@@ -35,6 +35,22 @@ func snmpAgentSet(oid string, defval interface{}) {
 	}
 }
 
+func snmpAgentSetLarge(oid string, defval interface{}) {
+	switch e := defval.(type) {
+	case int, int64, uint32, uint64:
+		TOM.AddInt("snmp", oid, int64(e.(int64)))
+		TOM.SetSize("snmp", oid, 34)
+		log.Debugf("Configured: %v", oid)
+		snmp.AgentSnmp.AddMibList(oid, gosnmp.Integer, func(oid string) interface{} { return TOM.Get("snmp", oid) })
+	case float64:
+		TOM.AddFloat("snmp", oid, float64(e))
+		snmp.AgentSnmp.AddMibList(oid, gosnmp.Counter64, func(oid string) interface{} { return uint64(TOM.Get("snmp", oid).(float64)) })
+	case string:
+		TOM.AddString("snmp", oid, string(e))
+		snmp.AgentSnmp.AddMibList(oid, gosnmp.OctetString, func(oid string) interface{} { return TOM.Get("snmp", oid) })
+	}
+}
+
 func SnmpAgentSet(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 	if len(args) != 2 {
 		return SexpNull, WrongNargs
@@ -48,6 +64,26 @@ func SnmpAgentSet(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 		}
 	} else if IsString(args[0]) {
 		snmpAgentSet(AsString(args[0]), AsAny(args[1]))
+		n += 1
+	} else {
+		return SexpNull, fmt.Errorf("First argument must be ether string or array")
+	}
+	return &SexpInt{Val: int64(n)}, nil
+}
+
+func SnmpAgentSetLarge(env *Zlisp, name string, args []Sexp) (Sexp, error) {
+	if len(args) != 2 {
+		return SexpNull, WrongNargs
+	}
+	n := 0
+	if IsArray(args[0]) {
+		oids := ArrayofStringsToArray(args[0])
+		for _, o := range oids {
+			snmpAgentSet(o, AsAny(args[1]))
+			n += 1
+		}
+	} else if IsString(args[0]) {
+		snmpAgentSetLarge(AsString(args[0]), AsAny(args[1]))
 		n += 1
 	} else {
 		return SexpNull, fmt.Errorf("First argument must be ether string or array")
@@ -158,10 +194,11 @@ func SnmpTrapsSnd(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 
 func SnmpMetricFunctions() map[string]ZlispUserFunction {
 	return map[string]ZlispUserFunction{
-		"snmpmetricset": SnmpAgentSet,
-		"snmptraprecvd": SnmpTrapsRecvd,
-		"snmptraprecv":  SnmpTrapsRecv,
-		"snmptrapsnd":   SnmpTrapsSnd,
+		"snmpmetricset":      SnmpAgentSet,
+		"snmpmetricsetlarge": SnmpAgentSetLarge,
+		"snmptraprecvd":      SnmpTrapsRecvd,
+		"snmptraprecv":       SnmpTrapsRecv,
+		"snmptrapsnd":        SnmpTrapsSnd,
 	}
 }
 
@@ -172,6 +209,7 @@ func SnmpMetricPackageSetup(cfg *ZlispConfig, env *Zlisp) {
        Get := (fn [oid] (observation.Get "snmp" oid ));
 			 Has := (fn [oid] (observation.Has "snmp" oid ));
 			 Set := snmpmetricset ;
+			 SetLarge := snmpmetricsetlarge ;
 			 Traps := snmptraprecvd ;
 			 Trap := snmptraprecv ;
 			 TrapSend := snmptrapsnd ;
