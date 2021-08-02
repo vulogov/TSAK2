@@ -27,7 +27,7 @@ func RandRand(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 			return SexpNull, fmt.Errorf("Do not know how to compute: %v", name)
 		}
 	}
-	if len(args) == 2 && name == "rand.Intn" {
+	if len(args) == 2 && (name == "rand.Intn" || name == "rand.Fltn") {
 		min := int(0)
 		switch e := args[0].(type) {
 		case *SexpInt:
@@ -43,7 +43,11 @@ func RandRand(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 			return SexpNull, fmt.Errorf("Second parameter must be integer")
 		}
 		v := (max - min) + 1
-		return &SexpInt{Val: int64(rand.Intn(int(v)) + min)}, nil
+		if name != "rand.Fltn" {
+			return &SexpInt{Val: int64(rand.Intn(int(v)) + min)}, nil
+		} else {
+			return &SexpFloat{Val: float64(rand.Intn(int(v)) + min)}, nil
+		}
 	}
 	return SexpNull, fmt.Errorf("Do not know how to compute: %v", name)
 }
@@ -55,6 +59,7 @@ func RandFunctions() map[string]ZlispUserFunction {
 		"randfloatnorm": RandRand,
 		"randfloatint":  RandRand,
 		"randintintn":   RandRand,
+		"randintintnfl": RandRand,
 	}
 }
 
@@ -65,6 +70,7 @@ func RandPackageSetup(cfg *ZlispConfig, env *Zlisp) {
 			 FloatNorm := randfloatnorm;
 			 Int := randfloatint;
 			 Intn := randintintn;
+			 Fltn := randintintnfl
      }
   ))`
 	_, err := env.EvalString(myPkg)
