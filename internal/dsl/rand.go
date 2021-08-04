@@ -12,6 +12,14 @@ import (
 var RandSource = rand.NewSource(int64(time.Now().UTC().UnixNano()))
 var Rand = rand.New(RandSource)
 
+func randFloatsToFloat64(min, max float64, n int) []float64 {
+	res := make([]float64, n)
+	for i := range res {
+		res[i] = float64(min + rand.Float64()*(max-min))
+	}
+	return res
+}
+
 func RandRand(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 	if len(args) == 0 {
 		switch name {
@@ -52,6 +60,28 @@ func RandRand(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 	return SexpNull, fmt.Errorf("Do not know how to compute: %v", name)
 }
 
+func RandToFloat(env *Zlisp, name string, args []Sexp) (Sexp, error) {
+	if len(args) == 2 {
+		min := float64(0.0)
+		switch e := args[0].(type) {
+		case *SexpFloat:
+			min = float64(e.Val)
+		default:
+			return SexpNull, fmt.Errorf("First parameter must be float")
+		}
+		max := float64(0.0)
+		switch e1 := args[1].(type) {
+		case *SexpFloat:
+			max = float64(e1.Val)
+		default:
+			return SexpNull, fmt.Errorf("Second parameter must be float")
+		}
+		val := randFloatsToFloat64(min, max, 1)
+		return &SexpFloat{Val: val[0]}, nil
+	}
+	return SexpNull, fmt.Errorf("Do not know how to compute: %v", name)
+}
+
 func RandFunctions() map[string]ZlispUserFunction {
 	return map[string]ZlispUserFunction{
 		"randfloatmax":  RandRand,
@@ -60,6 +90,7 @@ func RandFunctions() map[string]ZlispUserFunction {
 		"randfloatint":  RandRand,
 		"randintintn":   RandRand,
 		"randintintnfl": RandRand,
+		"randnfloat":    RandToFloat,
 	}
 }
 
@@ -70,10 +101,12 @@ func RandPackageSetup(cfg *ZlispConfig, env *Zlisp) {
 			 FloatNorm := randfloatnorm;
 			 Int := randfloatint;
 			 Intn := randintintn;
-			 Fltn := randintintnfl
+			 Fltn := randintintnfl ;
+			 NFloat := randnfloat ;
      }
   ))`
 	_, err := env.EvalString(myPkg)
+	rand.Seed(time.Now().UnixNano())
 	PanicOn(err)
 }
 
