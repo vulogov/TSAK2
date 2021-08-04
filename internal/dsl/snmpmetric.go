@@ -44,6 +44,7 @@ func snmpAgentSetLarge(oid string, defval interface{}) {
 		snmp.AgentSnmp.AddMibList(oid, gosnmp.Integer, func(oid string) interface{} { return TOM.Get("snmp", oid) })
 	case float64:
 		TOM.AddFloat("snmp", oid, float64(e))
+		log.Debugf("Configured to be unit64: %v", oid)
 		snmp.AgentSnmp.AddMibList(oid, gosnmp.Counter64, func(oid string) interface{} { return uint64(TOM.Get("snmp", oid).(float64)) })
 	case string:
 		TOM.AddString("snmp", oid, string(e))
@@ -79,7 +80,7 @@ func SnmpAgentSetLarge(env *Zlisp, name string, args []Sexp) (Sexp, error) {
 	if IsArray(args[0]) {
 		oids := ArrayofStringsToArray(args[0])
 		for _, o := range oids {
-			snmpAgentSet(o, AsAny(args[1]))
+			snmpAgentSetLarge(o, AsAny(args[1]))
 			n += 1
 		}
 	} else if IsString(args[0]) {
