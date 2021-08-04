@@ -28,7 +28,7 @@ func snmpAgentSet(oid string, defval interface{}) {
 		snmp.AgentSnmp.AddMibList(oid, gosnmp.Integer, func(oid string) interface{} { return TOM.Get("snmp", oid) })
 	case float64:
 		TOM.AddFloat("snmp", oid, float64(e))
-		snmp.AgentSnmp.AddMibList(oid, gosnmp.OpaqueFloat, func(oid string) interface{} { return TOM.Get("snmp", oid) })
+		snmp.AgentSnmp.AddMibList(oid, gosnmp.OpaqueFloat, func(oid string) interface{} { return float32(TOM.Get("snmp", oid).(float64)) })
 	case string:
 		TOM.AddString("snmp", oid, string(e))
 		snmp.AgentSnmp.AddMibList(oid, gosnmp.OctetString, func(oid string) interface{} { return TOM.Get("snmp", oid) })
