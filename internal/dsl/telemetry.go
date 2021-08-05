@@ -61,15 +61,40 @@ func (tom *TelemetryObservationMatrix) AdjustSize(source, name string, data inte
 	}
 	switch size {
 	case 32:
-		return int32(data.(int64))
+		switch data.(type) {
+		case int64:
+			return int32(data.(int64))
+		case float64:
+			return float64(data.(float64))
+		}
 	case 33:
-		return uint32(data.(int64))
+		switch data.(type) {
+		case int64:
+			return uint32(data.(int64))
+		case float64:
+			return float64(data.(float64))
+		}
 	case 34:
-		return int(data.(int64))
+		switch data.(type) {
+		case int64:
+			return int(data.(int64))
+		case float64:
+			return float64(data.(float64))
+		}
 	case 64:
-		return int64(data.(int64))
+		switch data.(type) {
+		case int64:
+			return int64(data.(int64))
+		case float64:
+			return float64(data.(float64))
+		}
 	case 65:
-		return uint64(data.(int64))
+		switch data.(type) {
+		case int64:
+			return uint64(data.(int64))
+		case float64:
+			return float64(data.(float64))
+		}
 	}
 	return data
 }
