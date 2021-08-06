@@ -446,11 +446,11 @@ func GenerateMetricLoop() {
 			if len(sk) != 2 {
 				return true
 			}
-			log.Debug("Telemetry Generator LOCK engaged")
-			Gen.Lock.Lock()
+			// log.Debug("Telemetry Generator LOCK engaged")
+			// Gen.Lock.Lock()
 			Gen.Compute(sk[0], sk[1])
-			log.Debug("Telemetry Generator UNLOCK engaged")
-			Gen.Lock.Unlock()
+			// log.Debug("Telemetry Generator UNLOCK engaged")
+			// Gen.Lock.Unlock()
 			return true
 		})
 	}
@@ -465,8 +465,8 @@ func PipelineMetricLoop() {
 	for !signal.ExitRequested() {
 		time.Sleep(time.Duration(PipelineInterval) * time.Second)
 		log.Debug("Pipeline loop started")
-		log.Debug("Telemetry Pipeline LOCK engaged")
-		Gen.Lock.Lock()
+		// log.Debug("Telemetry Pipeline LOCK engaged")
+		// Gen.Lock.Lock()
 		Gen.Gen.Range(func(key, val interface{}) bool {
 			sk := rekey.Split(string(key.(string)), 2)
 			if len(sk) != 2 {
@@ -483,8 +483,8 @@ func PipelineMetricLoop() {
 			}
 			return true
 		})
-		log.Debug("Telemetry Pipeline UNLOCK engaged")
-		Gen.Lock.Unlock()
+		// log.Debug("Telemetry Pipeline UNLOCK engaged")
+		// Gen.Lock.Unlock()
 	}
 	log.Debug("Telemetry pipeline loop is terminated")
 }
